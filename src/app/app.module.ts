@@ -8,13 +8,12 @@ import { UsuariosComponent } from './component/usuarios/usuarios.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UsuariosComponent
-  ],
+  declarations: [AppComponent, UsuariosComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,8 +21,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     NgbModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
