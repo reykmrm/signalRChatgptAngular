@@ -12,7 +12,7 @@ export class SignalrService {
 
   startConnection() {
     this.hubConnection = new HubConnectionBuilder()
-                            .withUrl('https://localhost:7204/chatHub')
+                            .withUrl('https://localhost:44339/chatHub')
                             .build();
 
     this.hubConnection

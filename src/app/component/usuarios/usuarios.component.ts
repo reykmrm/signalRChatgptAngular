@@ -17,10 +17,10 @@ export class UsuariosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   usuario = {
-    nombre: 'Lorena',
-    usuario: 'Lorenita',
+    nombre: 'Lorena1',
+    usuario: 'Lorenita1',
     clave: '123456',
-    imagen: 'jsjsjjsjsjsjsjjjs',
+    imagen: 'holahola',
   };
 
   constructor(private usuariosService: UsuariosService) {
@@ -38,11 +38,21 @@ export class UsuariosComponent implements OnInit {
     this.usuariosService.ResSendUser((message: string) => {
       console.log(`${message}`);
     });
+    this.usuariosService.ResGetAllUsers((user: any) => {
+      console.log(`${user}`);
+    });
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  // listar() {
+  //   this.usuariosService.SendUser(this.usuario);
+  // }
+  listar() {
+    this.usuariosService.GetAllUsers();
   }
 
   applyFilter(event: Event) {
@@ -70,9 +80,6 @@ function createNewUser(id: number): UserData {
     fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
   };
 
-  // SendUser() {
-  //   this.usuariosService.SendUser(this.usuario);
-  // }
 
 
 
