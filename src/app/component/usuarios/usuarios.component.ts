@@ -9,10 +9,9 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.scss'],
 })
-
 export class UsuariosComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource: MatTableDataSource<UserData>;
+  displayedColumns: string[] = ['id', 'Nombre', 'Usuario', 'Acciones'];
+  dataSource!: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -23,24 +22,13 @@ export class UsuariosComponent implements OnInit {
     imagen: 'holahola',
   };
 
-  constructor(private usuariosService: UsuariosService) {
-     // Create 100 users
-     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-     // Assign the data to the data source for the table to render
-     this.dataSource = new MatTableDataSource(users);
-  }
-
+  constructor(private usuariosService: UsuariosService) {}
 
   async ngOnInit(): Promise<void> {
     await this.usuariosService.startConnection();
-    // this.SendUser();
-    this.usuariosService.ResSendUser((message: string) => {
-      console.log(`${message}`);
-    });
-    this.usuariosService.ResGetAllUsers((user: any) => {
-      console.log(`${user}`);
-    });
+    setTimeout(() => {
+      this.listar();
+    }, 100);
   }
 
   ngAfterViewInit() {
@@ -48,11 +36,12 @@ export class UsuariosComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  // listar() {
-  //   this.usuariosService.SendUser(this.usuario);
-  // }
-  listar() {
-    this.usuariosService.GetAllUsers();
+  async listar() {
+    await this.usuariosService.GetAllUsers();
+    this.usuariosService.ResGetAllUsers((res: any) => {
+      console.log('Respueta de getUserALL', res);
+      this.dataSource = new MatTableDataSource(res);
+    });
   }
 
   applyFilter(event: Event) {
@@ -65,65 +54,8 @@ export class UsuariosComponent implements OnInit {
   }
 }
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
-
-
-
-
-}
-
-
 export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
+  id: number;
+  nombre: string;
+  usuario: string;
 }
-
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
-

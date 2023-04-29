@@ -12,7 +12,7 @@ export class UsuariosService {
 
   startConnection() {
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl('https://localhost:44339/UsuariosHub')
+      .withUrl('https://localhost:7204/UsuariosHub')
       .build();
 
     this.hubConnection
@@ -37,8 +37,8 @@ export class UsuariosService {
   public GetAllUsers() {
     this.hubConnection.invoke('GetAllUsers').catch((err) => console.error(err));
   }
-  
-  public ResGetAllUsers(callback: (users: any[]) => void) {
+
+  public ResGetAllUsers(callback: (users: any) => void) {
     this.hubConnection.on('GetAllUsersClient', callback);
   }
 }
