@@ -41,4 +41,31 @@ export class UsuariosService {
   public ResGetAllUsers(callback: (users: any) => void) {
     this.hubConnection.on('GetAllUsersClient', callback);
   }
+
+  public getUserById(id: number) {
+    this.hubConnection
+      .invoke('GetUserById', id)
+      .catch((err) => console.error(err));
+  }
+  public ResgetUserById(callback: (user: any) => void) {
+    this.hubConnection.on('UserById', callback);
+  }
+
+  public EditUser(idUser: number, user: any) {
+    this.hubConnection
+      .invoke('EditUser', idUser, user)
+      .catch((err) => console.error(err));
+  }
+  public ResEditUser(callback: (message: string) => void) {
+    this.hubConnection.on('UserEditado', callback);
+  }
+
+  public EliminarUser(idUser: number) {
+    this.hubConnection
+      .invoke('EliminarUser', idUser)
+      .catch((err) => console.error(err));
+  }
+  public ResEliminarUser(callback: (message: string) => void) {
+    this.hubConnection.on('UserEliminado', callback);
+  }
 }
