@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Form } from '@angular/forms';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 
 @Injectable({
@@ -24,9 +25,9 @@ export class UsuariosService {
       .catch((err) => console.log('Error while starting connection: ' + err));
   }
 
-  public SendUser(user: any) {
+  public SendUser(User: any) {
     this.hubConnection
-      .invoke('CreateUser', user)
+      .invoke('CreateUser', User)
       .catch((err) => console.error(err));
   }
 

@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import {
   ModalDismissReasons,
   NgbDatepickerModule,
@@ -28,19 +29,22 @@ export class UsuariosComponent implements OnInit {
     clave: '',
     imagen: '',
   };
+  imagen!: File;
+  formData = new FormData();
   idUser: number = 0;
   crear!: boolean;
 
   constructor(
     private usuariosService: UsuariosService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private sanitizer: DomSanitizer
   ) {}
 
   async ngOnInit(): Promise<void> {
     await this.usuariosService.startConnection();
     setTimeout(() => {
       this.listar();
-    }, 100);
+    }, 500);
   }
 
   ngAfterViewInit() {
@@ -57,7 +61,8 @@ export class UsuariosComponent implements OnInit {
   }
 
   async CrearUser() {
-    let message = '';
+    console.log('Usuario', this.usuario);
+    debugger;
     await this.usuariosService.SendUser(this.usuario);
     this.usuariosService.ResSendUser((message) => {
       console.log('Este es el mensaje de guardar', message);
@@ -66,6 +71,7 @@ export class UsuariosComponent implements OnInit {
     });
     await this.listar();
   }
+
   async EditUser(idUser: number) {
     this.crear = true;
     this.idUser = idUser;
@@ -103,6 +109,51 @@ export class UsuariosComponent implements OnInit {
       }
     });
   }
+
+  capturarFile(event: any): any {
+    const archivoCapturado = event.target.files[0];
+    this.extraerBase64(archivoCapturado).then((imagen) => {
+      console.log(imagen);
+
+      this.usuario.imagen = imagen.base ?? 'Sin imagen';
+
+      console.log('Imagen', imagen.base);
+
+      // this.archivos.push(archivoCapturado);
+      console.log('Usuario', this.usuario.imagen.toString());
+    });
+  }
+
+  extraerBase64 = async (
+    $event: any
+  ): Promise<{ blob: Blob; image: SafeUrl; base: string | null }> => {
+    try {
+      const unsafeImg = window.URL.createObjectURL($event);
+      const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
+      const reader = new FileReader();
+      reader.readAsDataURL($event);
+      return new Promise<{ blob: Blob; image: SafeUrl; base: string | null }>(
+        (resolve, reject) => {
+          reader.onload = () => {
+            resolve({
+              blob: $event,
+              image,
+              base: reader.result as string,
+            });
+          };
+          reader.onerror = (error) => {
+            resolve({
+              blob: $event,
+              image,
+              base: null,
+            });
+          };
+        }
+      );
+    } catch (e) {
+      return Promise.reject({ error: e });
+    }
+  };
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
