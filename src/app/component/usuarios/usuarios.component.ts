@@ -66,6 +66,8 @@ export class UsuariosComponent implements OnInit {
     });
     await this.listar();
   }
+
+  
   async EditUser(idUser: number) {
     this.crear = true;
     this.idUser = idUser;
