@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuxService } from 'src/app/Services/aux.service';
+import { AuxiliarService } from 'src/app/Services/auxiliar.service';
 import { LoginService } from 'src/app/Services/login.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { LoginService } from 'src/app/Services/login.service';
 export class LoginComponent implements OnInit {
   constructor(
     public loginService: LoginService,
-    public auxService: AuxService
+    public auxService: AuxiliarService
   ) {}
   usuario = {
     nombre: '',
