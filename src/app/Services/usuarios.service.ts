@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Form } from '@angular/forms';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@microsoft/signalr';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -10,20 +14,63 @@ export class UsuariosService {
   private connectionId!: any;
 
   constructor() {}
-
-  startConnection() {
-    this.hubConnection = new HubConnectionBuilder()
-      .withUrl('https://localhost:7204/UsuariosHub')
-      .build();
-
-    this.hubConnection
-      .start()
-      .then(() => {
-        console.log('Hub connection started');
-        this.connectionId = this.hubConnection.connectionId;
-      })
-      .catch((err) => console.log('Error while starting connection: ' + err));
+  public createSignalRConnection(): void {
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      const hubUrl = 'http://localhost:44339/UsuariosHub';
+  
+      // Crear la conexión del hub
+      this.hubConnection = new HubConnectionBuilder()
+        .withUrl(hubUrl, {
+          transport: HttpTransportType.WebSockets, // Opcional, ajusta el tipo de transporte según tus necesidades
+          accessTokenFactory: () => token
+        })
+        .build();
+  
+      // Iniciar la conexión del hub
+      this.startHubConnection();
+    } else {
+      console.error('Token not found in localStorage.');
+    }
   }
+  
+
+  
+  
+  private startHubConnection(): void {
+    this.hubConnection.start()
+      .then(() => {
+        console.log('Conexión establecida');
+  
+        // Escuchar eventos o realizar otras operaciones en la conexión establecida
+        this.hubConnection.on('SomeEvent', (data) => {
+          console.log('Evento recibido:', data);
+        });
+      })
+      .catch((error) => {
+        console.error('Error al conectar:', error);
+      });
+  }
+  // startConnection() {
+  //   const hubConnection = new HubConnectionBuilder()
+  //     .withUrl('http://localhost:44339/hub', {
+  //       accessTokenFactory: () => {
+  //         const token = localStorage.getItem('token');
+  //         return token || '';
+  //       }
+  //     })
+  //     .build();
+  
+  //   hubConnection
+  //     .start()
+  //     .then(() => {
+  //       console.log('Hub connection started');
+  //       this.connectionId = hubConnection.connectionId;
+  //     })
+  //     .catch((err) => console.log('Error while starting connection: ' + err));
+  // }
+  
 
   public SendUser(User: any) {
     this.hubConnection
@@ -36,7 +83,13 @@ export class UsuariosService {
   }
 
   public GetAllUsers() {
-    this.hubConnection.invoke('GetAllUsers').catch((err) => console.error(err));
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${localStorage.getItem('token')}`
+    );
+    this.hubConnection
+      .invoke('GetAllUsers')
+      .catch((err) => console.error(err));
   }
 
   public ResGetAllUsers(callback: (users: any) => void) {

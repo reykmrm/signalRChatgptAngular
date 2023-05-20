@@ -6,12 +6,13 @@
       <div class="col-md-6 offset-md-3">
         <div class="login-container">
           <h2 class="login-title">Iniciar sesión</h2>
-          <form class="login-form">
+          <div class="login-form">
             <div class="form-group">
               <input
                 type="email"
                 class="form-control"
-                placeholder="Correo electrónico"
+                placeholder="Usuario"
+                [(ngModel)]="usuario.usuario"
                 required
               />
             </div>
@@ -20,17 +21,18 @@
                 type="password"
                 class="form-control"
                 placeholder="Contraseña"
+                [(ngModel)]="usuario.clave"
                 required
               />
             </div>
             <div class="inicio">
-              <button type="submit" class="btn btn-primary btn-block">
+              <button (click)="Login()" class="btn btn-primary btn-block">
                 Iniciar sesión
               </button>
             </div>
 
             <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
-          </form>
+          </div>
         </div>
       </div>
     </div>

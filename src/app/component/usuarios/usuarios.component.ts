@@ -41,7 +41,7 @@ export class UsuariosComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.usuariosService.startConnection();
+    await this.usuariosService.createSignalRConnection();
     setTimeout(() => {
       this.listar();
     }, 500);
