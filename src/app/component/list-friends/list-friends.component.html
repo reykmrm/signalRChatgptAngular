@@ -1,0 +1,14 @@
+<div>
+  <h2>Usuarios</h2>
+  <div class="people-list">
+    <div *ngFor="let item of users" class="person">
+      <div class="person-avatar">
+        <img [src]="item.imagen" alt="" />
+      </div>
+      <div class="person-info">
+        <h2>{{ item.nombre }}</h2>
+        <button class="add-friend">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>

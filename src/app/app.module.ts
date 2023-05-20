@@ -12,9 +12,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { GroupsComponent } from './component/groups/groups.component';
+import { ListFriendsComponent } from './component/list-friends/list-friends.component';
+import { LoginComponent } from './component/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, UsuariosComponent],
+  declarations: [AppComponent, UsuariosComponent, GroupsComponent, ListFriendsComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

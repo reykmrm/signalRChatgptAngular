@@ -1,0 +1,38 @@
+.people-list {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+  margin: auto;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.person-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.person-info {
+  margin-left: 10px;
+}
+
+.person-info h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.add-friend {
+  background-color: #1877f2;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
