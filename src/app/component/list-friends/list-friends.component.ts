@@ -17,7 +17,7 @@ export class ListFriendsComponent implements OnInit {
     private modalService: NgbModal
   ) {}
   async ngOnInit() {
-    await this.usuariosService.createSignalRConnection();
+    //await this.usuariosService.startSignalRConnection();
     setTimeout(() => {
       this.GetAllUsers();
     }, 500);

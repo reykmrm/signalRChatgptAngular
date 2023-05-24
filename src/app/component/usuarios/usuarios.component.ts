@@ -41,7 +41,8 @@ export class UsuariosComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.usuariosService.createSignalRConnection();
+    // await this.usuariosService.startSignalRConnection();
+
     setTimeout(() => {
       this.listar();
     }, 500);
@@ -61,8 +62,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   async CrearUser() {
-    console.log('Usuario', this.usuario);
-    debugger;
     await this.usuariosService.SendUser(this.usuario);
     this.usuariosService.ResSendUser((message) => {
       console.log('Este es el mensaje de guardar', message);
@@ -70,6 +69,14 @@ export class UsuariosComponent implements OnInit {
       this.toastFuntion(message);
     });
     await this.listar();
+    this.limpiarInpust();
+  }
+
+  limpiarInpust() {
+    this.usuario.clave = '';
+    this.usuario.nombre = '';
+    this.usuario.imagen = '';
+    this.usuario.usuario = '';
   }
 
   async EditUser(idUser: number) {
@@ -195,13 +202,7 @@ export class UsuariosComponent implements OnInit {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
-    let vacio = {
-      nombre: '',
-      usuario: '',
-      clave: '',
-      imagen: '',
-    };
-    this.usuario = vacio;
+    this.limpiarInpust();
   }
 
   EditOpen(content: any) {
@@ -216,13 +217,7 @@ export class UsuariosComponent implements OnInit {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
-    let vacio = {
-      nombre: '',
-      usuario: '',
-      clave: '',
-      imagen: '',
-    };
-    this.usuario = vacio;
+    this.limpiarInpust();
   }
 
   private getDismissReason(reason: any): string {

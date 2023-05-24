@@ -17,7 +17,7 @@ export class SignalrService {
 
     this.hubConnection
         .start()
-        .then(() => console.log('Hub connection started'))
+        .then(() => console.log('Hub connection started chat'))
         .catch(err => console.log('Error while starting connection: ' + err));
   }
 
