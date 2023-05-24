@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Route, Router } from '@angular/router';
-import { AuxService } from 'src/app/Services/aux.service';
+import {  Router } from '@angular/router';
+import { AuxiliarService } from 'src/app/Services/auxiliar.service';
 import { LoginService } from 'src/app/Services/login.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { LoginService } from 'src/app/Services/login.service';
 export class LoginComponent implements OnInit {
   constructor(
     public loginService: LoginService,
-    public auxService: AuxService,
-    public route: Router
+    public auxService: AuxiliarService,
+    public route: Router,
   ) {}
   usuario = {
     nombre: '',
