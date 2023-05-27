@@ -15,9 +15,10 @@ import { MatInputModule } from '@angular/material/input';
 import { GroupsComponent } from './component/groups/groups.component';
 import { ListFriendsComponent } from './component/list-friends/list-friends.component';
 import { LoginComponent } from './component/login/login.component';
+import { ChatUsersComponent } from './component/chat-users/chat-users.component';
 
 @NgModule({
-  declarations: [AppComponent, UsuariosComponent, GroupsComponent, ListFriendsComponent, LoginComponent],
+  declarations: [AppComponent, UsuariosComponent, GroupsComponent, ListFriendsComponent, LoginComponent, ChatUsersComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

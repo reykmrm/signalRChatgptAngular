@@ -21,19 +21,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.signalRService.startConnection();
-    this.signalRService.registerOnMessageReceived((user, message) => {
-      console.log(`${user}: ${message}`);
-      this.messages.push({ user, message });
+    this.signalRService.registerOnMessageReceived((message) => {
+      console.log(`${message}`);
     });
   }
 
-  open(content: any) {
-    this.modalService.open(content);
-    Swal.fire('hola');
-  }
-
-  sendMessage() {
-    this.signalRService.sendMessage(this.user, this.message);
-    this.message = '';
-  }
+ 
 }

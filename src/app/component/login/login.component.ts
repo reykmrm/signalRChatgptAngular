@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
       console.log(token);
       if (token != 'false') {
         localStorage.setItem('token', token);
+        localStorage.setItem('id', this.usuario.usuario);
         this.route.navigate(['/usuarios']);
         this.auxService.toastFuntion('Ok!');
         setTimeout(() => {}, 500);

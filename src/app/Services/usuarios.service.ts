@@ -38,7 +38,7 @@ export class UsuariosService {
       .then(() => {
         // La conexión se estableció correctamente
         this.connectionId = this.hubConnection.connectionId;
-        //console.log('Connection ID:', this.connectionId);
+        console.log('Connection ID:', this.hubConnection.connectionId);
       })
       .catch((error) => {
         // Maneja el error de conexión
