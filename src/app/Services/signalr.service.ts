@@ -26,21 +26,36 @@ export class SignalrService {
     this.hubConnection
       .start()
       .then(() => {
-        this.conectado = true;
-        if (this.conectado == true) {
-          setTimeout(() => {
-            if (this.idUser) {
-              this.addToGroup(this.idUser);
-            }
-          }, 500);
-        }
         console.log('Hub connection started chat');
+        if (this.idUser) {
+          this.addToGroup(this.idUser); // Unirse al grupo después de una conexión exitosa
+        }
       })
       .catch((err) => {
-        this.removeFromGroup();
         console.log('Error while starting connection: ' + err);
+        this.scheduleReconnect(); // Programar reconexión después de un tiempo en caso de error
       });
+
+    this.hubConnection.onreconnected((connectionId) => {
+      console.log('Reconnected. Connection ID:', connectionId);
+      if (this.idUser) {
+        this.addToGroup(this.idUser); // Volver a unirse al grupo después de la reconexión
+      }
+    });
+
+    this.hubConnection.onclose((error) => {
+      console.log('Connection closed. Attempting to reconnect...');
+      this.scheduleReconnect(); // Programar reconexión después de un tiempo cuando se cierra la conexión
+    });
   }
+
+  scheduleReconnect() {
+    setTimeout(() => {
+      this.startConnection(); // Volver a intentar la conexión
+    }, 5000); // Esperar 5 segundos antes de intentar la reconexión (ajustar según tus necesidades)
+  }
+
+  
 
   public sendMessage(message: string) {
     this.hubConnection
