@@ -5,11 +5,13 @@ import { GroupsComponent } from './component/groups/groups.component';
 import { ListFriendsComponent } from './component/list-friends/list-friends.component';
 import { LoginComponent } from './component/login/login.component';
 import { ChatUsersComponent } from './component/chat-users/chat-users.component';
+import { GuardGuard } from './Services/guard.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+    
   },
   {
     path: 'Login',
@@ -18,18 +20,22 @@ const routes: Routes = [
   {
     path: 'usuarios',
     component: UsuariosComponent,
+    canActivate: [GuardGuard],
   },
   {
     path: 'groups',
     component: GroupsComponent,
+    canActivate: [GuardGuard],
   },
   {
     path: 'listUsuers',
     component: ListFriendsComponent,
+    canActivate: [GuardGuard],
   },
   {
     path: 'chatUsers',
     component: ChatUsersComponent,
+    canActivate: [GuardGuard],
   },
 ];
 

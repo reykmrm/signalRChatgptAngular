@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuxiliarService } from 'src/app/Services/auxiliar.service';
 import { LoginService } from 'src/app/Services/login.service';
 
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public loginService: LoginService,
     public auxService: AuxiliarService,
-    public route: Router,
+    public route: Router
   ) {}
   usuario = {
     nombre: '',
@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
         this.auxService.toastFuntion('Ok!');
         setTimeout(() => {}, 500);
         this.loginService.startSignalRConnection();
+
         return;
       }
       this.auxService.toastFuntion(token);
